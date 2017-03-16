@@ -1,0 +1,47 @@
+/*
+    vp_os_mutex_lock( &control_video_lock );
+    size = cvGetSize(src_img);
+    hsi_img = cvCreateImage(size,8,3 );
+    cvCopy(src_img,hsi_img,NULL );
+    cvCvtColor(src_img,hsi_img,CV_BGR2HSV);
+    vp_os_mutex_unlock( &control_video_lock );
+
+    
+    //size = cvGetSize(src);						//image size
+    //hsi_img = cvCreateImage(size,src->depth,3);			
+    //cvCvtColor(src,hsi_img,CV_BGR2HSV);
+
+
+    uchar* ptr_src;						//point to the pixel in the image
+    uchar dataH,dataS,dataV;
+
+    ptr_src = (uchar*)(hsi_img->imageData + (size.height/2)*hsi_img->widthStep + (size.width/2)*hsi_img->nChannels);
+    printf("Pix :--%d,%d,%d\n",ptr_src[0],ptr_src[1],ptr_src[2]);	//print the hsv of the target color
+
+  
+  
+    dataH = ptr_src[0];
+    dataS = ptr_src[1];
+    dataV = ptr_src[2];
+
+   
+    
+    IplImage* filt_img;					//get the filtered images
+    filt_img = cvCreateImage(size,hsi_img->depth,1);
+    cvZero(filt_img);
+  
+    
+    int i,j;
+    uchar* ptr_dst;					//point to the pixel to compare with ptr_src
+    float dist;						//calculate the distance
+
+    for( i=0;i<size.width;i++ )
+        for( j=0;j<size.height;j++ )
+          {
+        	ptr_src = (uchar *) (hsi_img->imageData + j * hsi_img->widthStep + i * hsi_img->nChannels);
+        	ptr_dst = (uchar *) (filt_img->imageData + j * filt_img->widthStep + i * filt_img->nChannels);
+        	dist = abs(30 - ptr_src[1]);
+        	if(dist<10) *ptr_dst = 255;
+          }
+    
+    */
